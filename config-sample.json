@@ -1,0 +1,22 @@
+{
+    "baseUrl": "https://example.com",
+
+    "title": "Ein grossartiger Podcast",
+    "subtitle": "Jede Woche neu",
+    "description": "Sehr sympathische Moderatorinnen und Moderatoren begleiten Sie bei diesem Hörerlebnis",
+
+    "author": "Maria und Frederika",
+    "keywords": "deep shit",
+    "itunesCategory": "Society &amp; Culture",
+
+    "appleUrl": "https://podcasts.apple.com/ch/podcast/your-apple-podcast/id123456",
+    "spotifyUrl": "https://open.spotify.com/show/abc123",
+
+    "email": "info@example.com",
+    "twitter": "https://twitter.com/example",
+    "twitterHandle": "@example",
+    "instagram": "https://www.instagram.com/example",
+    "facebook": "https://www.facebook.com/example"
+
+}
+

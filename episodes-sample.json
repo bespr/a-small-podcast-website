@@ -1,0 +1,22 @@
+[
+    {
+        "title": "Episode Eins",
+        "filename": "episode-1.mp3",
+        "pubDate": "2020-01-15 16:00:00",
+        "description": "Dies ist unsere erste Episode\n\nEs ist eine sehr spannende Episode.",
+        "duration": "00:11",
+        "img": "cover-episode-1.jpg",
+        "episodeNum": "1",
+        "slug": "episode-1"
+    },
+    {
+        "title": "Episode Zwei",
+        "filename": "episode-2.mp3",
+        "pubDate": "2030-12-31 16:00:00",
+        "description": "Dies ist unsere zweite Episode\n\nComing soon.",
+        "duration": "00:13",
+        "img": "cover-episode-2.jpg",
+        "episodeNum": "2",
+        "slug": "episode-2"
+    }
+]
