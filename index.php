@@ -1,10 +1,29 @@
 <?php
 
-    $configRaw = file_get_contents('config.json');
-    $config = json_decode($configRaw, true);
 
-    $contentRaw = file_get_contents('episodes.json');
+    # Config File
+
+    $configFile = 'config.json';
+    if (!file_exists($configFile)) {
+        echo '<h1>Config-Fehler, du Lulatsch!</h1><p>Datei «' . $configFile . '» existiert nicht. Eventuell musst du die <i>Sample</i>-Datei noch umbenennen';
+        exit;
+    }
+    $contentRaw = file_get_contents($configFile);
+    $config = json_decode($contentRaw, true);
+
+    # Episodes File
+    $episodesFile = 'episodes.json';
+    if (!file_exists($episodesFile)) {
+        echo '<h1>Config-Fehler, du Lulatsch!</h1><p>Datei «' . $episodesFile . '» existiert nicht. Eventuell musst du die <i>Sample</i>-Datei noch umbenennen';
+        exit;
+    }
+    $contentRaw = file_get_contents($episodesFile);
     $episodes = json_decode($contentRaw, true);
+
+    if (is_null($episodes)) {
+        echo '<h1>Config-Fehler, du Lulatsch!</h1><p>Datei «' . $episodesFile . '» ist kein JSON. Es muss mind. ein leeres Array vorhanden sein, d.h. []';
+        exit;
+    }
 
     $now = date('Y-m-d H:i:s');
 
@@ -16,8 +35,7 @@
 
     usort($futureEpisodes, 'sortByPubDate');
 
-//    var_dump($futureEpisodes);
-    if (count($futureEpisodes > 0)) {
+    if (count($futureEpisodes) > 0) {
         $nextEpisode = array_pop($futureEpisodes);
     }
 /*
@@ -100,6 +118,7 @@
             background-image: url('cover.jpg');
             background-size: 100%;
             margin: 0 auto;
+            border: 1px solid #ddd;
         }
 
         @media screen and (min-width: 500px) {
@@ -176,6 +195,7 @@
             width: 160px;
             height: auto;
             display: block;
+            border: 1px solid #ddd;
         }
 
         .episode_teaser p {
@@ -199,9 +219,19 @@
     </style>
 </head>
 <body>
-    <h1>True Crime Swiss Edition</h1>
+    <h1><?php echo $config['title']; ?></h1>
 
-    <p>Jetzt abonnieren auf <a href="<?php echo $config['appleUrl']; ?>">Apple-Podcasts</a>, auf <a href="<?php echo $config['spotifyUrl']; ?>">Spotify</a> oder in der Podcast-App deiner Wahl.</p>
+    <?php if (!empty($config['appleUrl']) || !empty($config['spotifyUrl'])) { ?>
+    <p>
+        Jetzt abonnieren
+        <?php if (!empty($config['appleUrl'])) { ?>
+        auf <a href="<?php echo $config['appleUrl']; ?>">Apple-Podcasts</a>,
+        <?php } ?>
+        <?php if (!empty($config['spotifyUrl'])) { ?>
+        auf <a href="<?php echo $config['spotifyUrl']; ?>">Spotify</a> oder 
+        <?php } ?>
+        in der Podcast-App deiner Wahl.
+    </p>
 
     <p>Falls wir doch nicht in deinem Lieblings-Podcast-Verzeichnis auffindbar sein sollten, hier ist die Feed-URL:</p>
 
@@ -212,42 +242,52 @@
             this.setSelectionRange(0, this.value.length)
         });
     </script>
+    <?php } ?>
 
     <?php if ($nextEpisode) { ?>
     <?php
         $timestamp = strtotime($nextEpisode['pubDate']);
-        $humanDateTime = strftime('%d.%m.%Y um %H:%M Uhr', $timestamp);
+        $humanDateTime = date('d.m.Y', $timestamp) . ' um ' . date('H:i', $timestamp) . ' Uhr';
         $img = 'cover.jpg';
         if (isset($nextEpisode['img'])) {
-            $img = 'covers/' . $nextEpisode['img'];
+            $episodeImg = 'covers/' . $nextEpisode['img'];
+            if (file_exists($episodeImg)) {
+                $img = $episodeImg;
+            }
         }
     ?>
     <h2>Nächste Episode:</h2>
     <div class="episode_teaser">
         <img src="<?php echo $img; ?>" />
         <p>
-        Thema: <?php echo $nextEpisode['title']; ?><br />
+        <?php echo $nextEpisode['title']; ?><br />
         Erscheint am <?php echo $humanDateTime; ?></p>
     </div>
     <?php } ?>
 
 
-    <h2>Vergangene Episoden</h2>
-    <?php foreach ($episodes as $episode) { ?>
+    <h2>Publizierte Episoden</h2>
+    <?php if (count($episodes) === 0) { ?>
+        <p><i>Noch keine</i></p>
+    <?php } ?>
 
+    <?php foreach ($episodes as $episode) { ?>
     <?php
         $timestamp = strtotime($episode['pubDate']);
-        $humanDateTime = strftime('%d.%m.%Y um %H:%M Uhr', $timestamp);
+        $humanDateTime = date('d.m.Y', $timestamp) . ' um ' . date('H:i', $timestamp) . ' Uhr';
         $img = 'cover.jpg';
         if (isset($episode['img'])) {
-            $img = 'covers/' . $episode['img'];
+            $episodeImg = 'covers/' . $episode['img'];
+            if (file_exists($episodeImg)) {
+                $img = $episodeImg;
+            }
         }
     ?>
     <div class="episode_teaser">
         <a class="episode_teaser__link" href="<?php echo $config['baseUrl']; ?>/folge/<?php echo $episode['slug']; ?>">
             <img src="<?php echo $img; ?>" />
             <p>
-            Thema: <?php echo $episode['title']; ?><br />
+            <?php echo $episode['title']; ?><br />
             Erschien am <?php echo $humanDateTime; ?></p>
         </a>
     </div>
@@ -256,10 +296,18 @@
 
     <footer>
         <p>Kontakt:
+        <?php if (!empty($config['email'])) { ?>
         <a href="mailto:<?php echo $config['email']; ?>"><?php echo $config['email']; ?></a>,
+        <?php } ?>
+        <?php if (!empty($config['twitter'])) { ?>
         <a href="<?php echo $config['twitter']; ?>">Twitter</a>,
+        <?php } ?>
+        <?php if (!empty($config['instagram'])) { ?>
         <a href="<?php echo $config['instagram']; ?>">Instagram</a>,
+        <?php } ?>
+        <?php if (!empty($config['facebook'])) { ?>
         <a href="<?php echo $config['facebook']; ?>">Facebook</a>
+        <?php } ?>
         </p>
     </footer>
 

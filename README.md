@@ -59,3 +59,13 @@ TBD
 ## WICHTIG, falls dein Podcast zu erfolgreich wird
 
 * Typische günstige Webhoster sehen es nicht gerne, wenn erfolgreiche Podcast auf ihren Servern gehostet werden. Der Grund: Lange läuft nichts, dann wird eine neue MP3-Datei veröffentlicht, welche relativ gross ist, und dann kommen Tausende von Usern gleichzeitig und laden die MP3-Datei herunter. Deshalb bieten sich die klassischen Podcast-Anbieter an, sobald dein Podcast eine gewisse Zahl von Hörerinnen und Hörern aufweisen kann.
+
+
+
+## Technisches
+
+### Lokalen Webserver starten
+1. Sicherstellen, dass Docker App (Docker Desktop) gestartet ist 
+2. `docker-compose up -d` ausführen (oder `docker-compose up --build -d`)
+3. Lokal ev. `.htaccess` anpassen, damit die Weiterleitung auf https nicht gemacht wird.
+3. Website aufrufen: http://localhost:8080
