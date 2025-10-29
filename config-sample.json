@@ -12,6 +12,8 @@
     "appleUrl": "https://podcasts.apple.com/ch/podcast/your-apple-podcast/id123456",
     "spotifyUrl": "https://open.spotify.com/show/abc123",
 
+    "footerLinkUrl": "https://example.com",
+    "footerLinkText": "Website Example",
     "email": "info@example.com",
     "twitter": "https://twitter.com/example",
     "twitterHandle": "@example",

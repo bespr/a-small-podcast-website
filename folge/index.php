@@ -52,7 +52,8 @@ $pageDesc = $episode['description'];
 $url = $config['baseUrl'] . '/folge/' . $episode['slug'];
 
 $timestamp = strtotime($episode['pubDate']);
-$humanDateTime = strftime('%d.%m.%Y um %H:%M Uhr', $timestamp);
+$humanDateTime = date('d.m.Y', $timestamp) . ' um ' . date('H:i', $timestamp) . ' Uhr';
+
 
 $episodeImg = '/cover.jpg';
 if (isset($episode['img'])) {
@@ -216,12 +217,7 @@ $episodeImgLandscape = $config['baseUrl'] . $episodeImgLandscape;
 
 
     <footer>
-        <p>Kontakt:
-        <a href="mailto:<?php echo $config['email']; ?>"><?php echo $config['email']; ?></a>,
-        <a href="<?php echo $config['twitter']; ?>">Twitter</a>,
-        <a href="<?php echo $config['instagram']; ?>">Instagram</a>,
-        <a href="<?php echo $config['facebook']; ?>">Facebook</a>
-        </p>
+        <?php include('../parts/footer.php'); ?>
     </footer>
 
 
