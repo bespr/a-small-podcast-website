@@ -83,7 +83,7 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
 
 <item>
     <title><?php echo $e['title']; ?></title>
-    <link><?php echo $linkUrl; ?></link>
+    <link><?php echo $episodeUrl; ?></link>
     <pubDate><?php echo date('r', strtotime($e['pubDate'])); ?></pubDate>
     <description><?php echo $e['description']; ?></description>
     <enclosure url="<?php echo $linkUrl; ?>" type="audio/mpeg"/>
