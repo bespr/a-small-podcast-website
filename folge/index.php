@@ -49,6 +49,7 @@ if (isset($_GET['publ'])) {
 
 $pageTitle = $episode['title'] . ' | Episode ' . $episode['episodeNum'] . ' von Podcast «' . $config['title'] . '»';
 $pageDesc = $episode['description'];
+$pageDescFlat = strip_tags(str_replace("\n", ' ', $pageDesc));
 $url = $config['baseUrl'] . '/folge/' . $episode['slug'];
 
 $timestamp = strtotime($episode['pubDate']);
@@ -81,7 +82,7 @@ $episodeImgLandscape = $config['baseUrl'] . $episodeImgLandscape;
     <title><?php echo $pageTitle; ?></title>
 
     <meta property="og:title" content="<?php echo $pageTitle; ?>" />
-    <meta property="og:description" content="<?php echo $pageDesc; ?>" />
+    <meta property="og:description" content="<?php echo $pageDescFlat; ?>" />
     <meta property="og:image" content="<?php echo $episodeImgLandscape; ?>" />
     <meta property="og:url" content="<?php echo $url; ?>">
     <meta property="og:site_name" content="Podcast «<?php echo $config['title']; ?>»" />
