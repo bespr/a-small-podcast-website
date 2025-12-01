@@ -53,7 +53,13 @@ TBD
 
 ## Bei Apple bzw. Spotify registrieren
 
-TBD
+Apple:
+https://podcastsconnect.apple.com
+Melde dich mit deiner Apple-ID an.
+
+Spotify:
+https://podcasters.spotify.com
+Melde dich mit deinem Spotify-Account an.
 
 
 ## WICHTIG, falls dein Podcast zu erfolgreich wird
