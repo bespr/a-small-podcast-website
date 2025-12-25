@@ -37,7 +37,7 @@ header('Content-Type: text/xml');
 
 echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
 ?>
-<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:podcast="https://podcastindex.org/namespace/1.0" version="2.0">
     <channel>
         <title><?php echo $config['title']; ?></title>
         <link><?php echo $config['baseUrl']; ?></link>
@@ -99,6 +99,10 @@ echo '<?xml version="1.0" encoding="utf-8" ?>' . "\n";
     <itunes:summary><?php echo $e['description']; ?></itunes:summary>
     <itunes:image href="<?php echo $episodeImg; ?>"/>
     <itunes:explicit>no</itunes:explicit>
+    <?php $epNum = intval($e['episodeNum']); if ($epNum >= 1) { ?>
+    <itunes:episode><?php echo $epNum; ?></itunes:episode>
+    <podcast:episode><?php echo $epNum; ?></podcast:episode>
+    <?php } ?>
 </item>
 
 <?php } ?>
